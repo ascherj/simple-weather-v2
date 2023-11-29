@@ -13,7 +13,7 @@ async def weather(request: Request):
     location = request.query_params.get('location', 'San Francisco, CA')
     data = acls.get_weather_data(location)
     if data is None:
-        return PlainTextResponse('City not found', status_code=404)
+        return PlainTextResponse('Location not found', status_code=404)
     return JSONResponse(data)
 
 routes = [

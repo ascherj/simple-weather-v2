@@ -1,6 +1,7 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 import axios from 'axios';
 import { Weather } from '../types';
+import './Search.css';
 
 interface SearchProps {
   setCurrentWeather: Dispatch<SetStateAction<Weather | null>>;
@@ -15,19 +16,22 @@ function Search(props: SearchProps): React.JSX.Element {
 
   const getWeather = () => {
     axios.get('http://localhost:8000/weather', {
-      params: {
-        location
-      },
+      params: { location },
     })
-      .then(({ data: { city, country, temp, description }}) => {
+      .then(({ data: { city, state, country, temp, description }}) => {
         props.setCurrentWeather({
           location: {
             city: city,
+            state: state,
             country: country
           },
           temperature: temp,
           description: description,
         });
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('There was a problem getting the weather. Please try again.')
       });
   };
 

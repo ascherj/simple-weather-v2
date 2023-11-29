@@ -14,7 +14,11 @@ function App() {
         <Search setCurrentWeather={setCurrentWeather} />
         {currentWeather && (
           <>
-            <h2>{currentWeather.location.city}, {currentWeather.location.country}</h2>
+            <h2>
+              {currentWeather.location.city},&nbsp;
+              {currentWeather.location.state ? `${currentWeather.location.state}, ` : ''}
+              {currentWeather.location.country}
+            </h2>
             <p>{currentWeather.temperature}°F</p>
             <p>{currentWeather.description}</p>
           </>
