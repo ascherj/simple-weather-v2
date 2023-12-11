@@ -1,28 +1,30 @@
-from starlette.applications import Starlette
-from starlette.requests import Request
-from starlette.responses import JSONResponse, PlainTextResponse
-from starlette.routing import Route
-from starlette.middleware import Middleware
-from starlette.middleware.cors import CORSMiddleware
-import settings, acls
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-async def homepage(request: Request):
-    return JSONResponse({'hello': 'world'})
 
-async def weather(request: Request):
-    location = request.query_params.get('location', 'San Francisco, CA')
+import acls
+
+app = FastAPI()
+
+origins = [
+    "http://localhost:5173"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def homepage():
+    return {"hello": "world"}
+
+@app.get("/weather")
+def weather(location: str):
     data = acls.get_weather_data(location)
     if data is None:
-        return PlainTextResponse('Location not found', status_code=404)
-    return JSONResponse(data)
-
-routes = [
-    Route('/', homepage, methods=['GET']),
-    Route('/weather', weather, methods=['GET']),
-]
-
-middleware = [
-    Middleware(CORSMiddleware, allow_origins=['*'])
-]
-
-app = Starlette(debug=True, routes=routes, middleware=middleware)
+        return "Location not found", 404
+    return data
