@@ -1,5 +1,5 @@
 import { useState, Dispatch, SetStateAction } from 'react';
-import axios from 'axios';
+import api from '../api/api';
 import { Weather } from '../types';
 import './Search.css';
 
@@ -15,7 +15,7 @@ function Search(props: SearchProps): React.JSX.Element {
   };
 
   const getWeather = () => {
-    axios.get('http://localhost:8000/weather', {
+    api.get('/weather', {
       params: { location },
     })
       .then(({ data: { city, state, country, temp, description }}) => {

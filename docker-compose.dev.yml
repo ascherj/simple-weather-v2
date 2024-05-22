@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  ghi:
+    build:
+      context: ./ghi
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./ghi:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./server:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=My FastAPI App
+      - ENVIRONMENT=development
+      - DATABASE_URL=sqlite:///./test.db

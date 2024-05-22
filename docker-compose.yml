@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  ghi:
+    build:
+      context: ./ghi
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - FASTAPI_API_URL=http://server:8000
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      - APP_NAME=My FastAPI App
+      - ENVIRONMENT=development
+      - DATABASE_URL=sqlite:///./test.db
