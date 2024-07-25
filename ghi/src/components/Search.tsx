@@ -15,15 +15,16 @@ function Search(props: SearchProps): React.JSX.Element {
   };
 
   const getWeather = () => {
-    api.get('/weather', {
-      params: { location },
-    })
-      .then(({ data: { city, state, country, temp, description }}) => {
+    api
+      .get('/weather', {
+        params: { location },
+      })
+      .then(({ data: { city, state, country, temp, description } }) => {
         props.setCurrentWeather({
           location: {
             city: city,
             state: state,
-            country: country
+            country: country,
           },
           temperature: temp,
           description: description,
@@ -31,7 +32,7 @@ function Search(props: SearchProps): React.JSX.Element {
       })
       .catch((err) => {
         console.log(err);
-        alert('There was a problem getting the weather. Please try again.')
+        alert('There was a problem getting the weather. Please try again.');
       });
   };
 
