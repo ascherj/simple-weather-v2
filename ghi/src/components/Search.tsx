@@ -19,12 +19,14 @@ function Search(props: SearchProps): React.JSX.Element {
       .get('/weather', {
         params: { location },
       })
-      .then(({ data: { city, state, country, temp, description } }) => {
+      .then(({ data: { city, state, country, lat, lon, temp, description } }) => {
         props.setCurrentWeather({
           location: {
             city: city,
             state: state,
             country: country,
+            lat: lat,
+            lon: lon,
           },
           temperature: temp,
           description: description,

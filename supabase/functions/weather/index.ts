@@ -83,6 +83,8 @@ Deno.serve(async (req) => {
       "city": data.name,
       "state": state,
       "country": country,
+      "lat": data.coord.lat,
+      "lon": data.coord.lon,
       "temp": data.main.temp,
       "description": data.weather[0].description,
     }

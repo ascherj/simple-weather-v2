@@ -1,9 +1,13 @@
+export type Location = {
+  city: string;
+  state: string;
+  country: string;
+  lat: number;
+  lon: number;
+};
+
 export type Weather = {
-  location: {
-    city: string;
-    state: string;
-    country: string;
-  };
+  location: Location;
   temperature: number;
   description: string;
 };
